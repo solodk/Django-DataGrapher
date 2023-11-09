@@ -1,5 +1,5 @@
 """
-ASGI config for data_grapher project.
+ASGI config for dg_project project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'data_grapher.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'dg_project.settings')
 
 application = get_asgi_application()
