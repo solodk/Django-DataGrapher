@@ -27,5 +27,5 @@ jobs:
         pip install -r data_grapher/requirements.txt
     - name: Run Tests
       run: |
-        python data_grapher/manage.py test data_grapher/apps/accounts
-        python data_grapher/manage.py test data_grapher/apps/dg_app
+        python data_grapher/manage.py test data_grapher/apps/accounts -v 2
+        python data_grapher/manage.py test data_grapher/apps/dg_app -v 2
