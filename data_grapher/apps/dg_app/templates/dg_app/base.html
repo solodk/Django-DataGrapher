@@ -1,0 +1,13 @@
+{% if user.is_authenticated %}
+    Hello, {{ user.username }} - 
+    <a href ="{% url 'dg_app:home' %}">Home</a>
+    <form action="{% url 'accounts:logout' %}" method='post'>
+        {% csrf_token %}
+        <button name='submit'>Log out</button>
+    </form>
+{% else %}
+    <a href="{% url 'accounts:login' %}">Log in</a></li>
+    <a href="{% url 'accounts:register' %}">Register</a>
+{% endif %}
+
+{% block content %}{% endblock content %}
