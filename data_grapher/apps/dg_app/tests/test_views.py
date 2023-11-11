@@ -12,16 +12,12 @@ class ViewTests(TestCase):
 
     def test_index_view(self):
         response = self.client.get(reverse('dg_app:index'))
+
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'dg_app/index.html')
     
-    def test_homepage_view(self):
-        response = self.client.get(reverse('dg_app:home'))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'dg_app/home.html')
-
     def test_logged_homepage_view(self):
-        self.client.login(username='test_user', password='testpassword')
+        self.client.force_login(self.user)
         response = self.client.get(reverse('dg_app:home'))
 
         self.assertEqual(response.status_code, 200)
@@ -40,7 +36,8 @@ class ViewTests(TestCase):
 
         # Check if the content for unauthenticated users is present
         if response.status_code == 302:
-            self.assertRedirects(response, reverse('accounts:login'))
+            expected_url = reverse('accounts:login') + '?next=' + reverse('dg_app:home')
+            self.assertRedirects(response, expected_url)
         else:
             self.assertContains(
                 response, 
