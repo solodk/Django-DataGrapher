@@ -2,7 +2,7 @@
 
 {% block content %}
     {% if user.is_authenticated %}
-        <a>Projects</a> - 
+        <a href="{% url 'dg_app:projects' %}">Projects</a> - 
         <a>Templates</a>
         <p>{Latest Templates}</p>
     {% else %}

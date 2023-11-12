@@ -10,6 +10,7 @@ class Project(models.Model):
         return self.name
 
 class Table(models.Model):
+    name = models.CharField(max_length=128)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     date_created = models.DateTimeField(auto_now_add=True)
     content = models.JSONField()
@@ -18,4 +19,4 @@ class Table(models.Model):
         """
         Return a representation of entry in a string
         """
-        return f"{self.project.owner.username}'s {self.project.name} table"
+        return f"{self.name}"
