@@ -27,3 +27,14 @@ def project(request, project_id):
     
     context = {'project': project, 'tables': tables}
     return render(request, 'dg_app/project.html', context)
+
+@login_required
+def table(request, table_id):
+    table = Table.objects.get(id=table_id)
+    content = table.content
+
+    if table.project.owner != request.user:
+        raise Http404
+    
+    context = {'content': content}
+    return render(request, 'dg_app/table.html', context)
