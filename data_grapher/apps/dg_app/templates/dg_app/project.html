@@ -1,0 +1,24 @@
+{% extends 'dg_app/base.html' %}
+
+{% block content %}
+
+    {% if user.is_authenticated %}
+    <ul>
+        <li>{{ project.name }}</li>
+        <ul>
+        {% for table in tables %}
+            <li>
+                <a href="test.com">{{ table.name }}</a>
+            </li>
+        {% empty %}
+            <li>
+                <li>No tables have been created yet.</li>
+            </li>
+        {% endfor %}
+        </ul>
+    </ul>
+    {% else %}
+        <p>You need to be logged in to see this page</p>
+    {% endif %}
+    
+{% endblock content %}

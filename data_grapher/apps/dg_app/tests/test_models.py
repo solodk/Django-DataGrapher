@@ -17,12 +17,12 @@ class ModelTests(TestCase):
         )
         self.table = Table.objects.create(
             project=self.project,
-            content=self.table_data
+            content=self.table_data,
+            name='test_table'
         )
 
     def test_table_str(self):
-        expected_str = f"{self.user.username}'s {self.project.name} table"
-        self.assertEqual(str(self.table), expected_str)
+        self.assertEqual(str(self.table), self.table.name)
     
     def test_table_project_connection(self):
         db_table = Table.objects.get(id=self.table.id)

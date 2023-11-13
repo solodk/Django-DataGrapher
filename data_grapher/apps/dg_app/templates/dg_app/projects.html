@@ -1,0 +1,20 @@
+{% extends 'dg_app/base.html' %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+    <ul>
+        <li>Projects</li>
+        <ul>
+        {% for project in projects %}
+            <li>
+                <a href="{% url 'dg_app:project' project.id %}">
+                    {{ project.name }}</a></li>
+        {% empty %}
+            <li>No project have been created yet.</li>
+        {% endfor %}
+        </ul>
+    </ul>
+    {% else %}
+        <p>You need to be logged in to see this page</p>
+    {% endif %}
+{% endblock content %}
