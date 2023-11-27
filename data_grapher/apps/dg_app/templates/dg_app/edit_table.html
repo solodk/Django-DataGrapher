@@ -38,6 +38,6 @@
             </tbody>
             
         </table>
-        <button onclick="saveChanges()" data-url="{% url 'dg_app:save_table' table_id=1 %}">Save Changes</button>
+        <button onclick="saveChanges()" data-url="{% url 'dg_app:edit_table' table_id project_id %}">Save Changes</button>
     {% endif %}
 {% endblock content %}

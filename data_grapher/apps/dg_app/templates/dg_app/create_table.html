@@ -29,9 +29,8 @@
                 <td contenteditable="true"></td>
                 <td contenteditable="true"></td>
             </tr>
-            <!-- Add more rows as needed -->
         </tbody>
     </table>
-        <button onclick="saveChanges()" data-url="{% url 'dg_app:save_table' table_id %}">Save Changes</button>
+        <button onclick="saveChanges()" data-url="{% url 'dg_app:create_table' project_id %}">Save Changes</button>
     {% endif %}
 {% endblock content %}

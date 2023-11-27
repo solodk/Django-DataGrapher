@@ -33,46 +33,56 @@ def project(request, project_id):
     if project.owner != request.user:
         raise Http404
     
-    context = {'project': project, 'tables': tables}
+    context = {'project': project, 'tables': tables, 'project_id': project_id}
     return render(request, 'dg_app/project.html', context)
 
 @login_required
-def table(request, table_id):
+def table(request, table_id, project_id):
     table = Table.objects.get(id=table_id)
     content = table.content
 
     if table.project.owner != request.user:
         raise Http404
     
-    context = {'content': content, 'id': table_id}
+    context = {'content': content, 'table_id': table_id, 'project_id': project_id}
     return render(request, 'dg_app/table.html', context)
 
+@csrf_protect
 @login_required
-def edit_table(request, table_id):
+def edit_table(request, table_id, project_id):
     table = get_object_or_404(Table, id=table_id)
-    content = table.content
 
     if table.project.owner != request.user:
         raise Http404
 
-    context = {'content': content, 'table_id': table_id}
+    if request.method == 'POST':
+        data = json.loads(request.body.decode('utf-8'))
+
+        # Update the existing table content
+        table.content = data
+        table.save()
+
+        return JsonResponse({
+            'status': 'success', 
+            'redirect_url': reverse('dg_app:table', args=[table.id, project_id])
+        })
+
+    context = {'content': table.content, 'table_id': table_id, 'project_id': project_id}
     return render(request, 'dg_app/edit_table.html', context)
 
 @csrf_protect
-@require_POST
-def save_table(request, table_id):
+@login_required
+def create_table(request, project_id):
     if request.method == 'POST':
         data = json.loads(request.body.decode('utf-8'))
-        print('Request POST Data:', data)
-        table = get_object_or_404(Table, id=table_id)
-        table.content = data
-        table.save()
-        # return JsonResponse({'status': 'success'})
+
+        # Create a new table instance
+        table = Table.objects.create(project=your_project_instance, content=data)
+
         return JsonResponse({
             'status': 'success', 
-            'redirect_url': reverse('dg_app:table', args=[table_id])
+            'redirect_url': reverse('dg_app:table', args=[table.id, project_id])
         })
-    return JsonResponse({'status': 'error'})
 
-def create_table(request):
-    return render(request, 'dg_app/create_table.html')
+    context = {'project_id': project_id}
+    return render(request, 'dg_app/create_table.html', context)
