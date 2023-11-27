@@ -3,6 +3,7 @@
 {% block content %}
 
     {% if user.is_authenticated %}
+    <p><a href="{% url 'dg_app:create_table' %}">Create table</a></p>
     <ul>
         <li>{{ project.name }}</li>
         <ul>

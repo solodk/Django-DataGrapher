@@ -11,4 +11,5 @@ urlpatterns = [
     path('table/<int:table_id>', views.table, name='table'),
     path('table/<int:table_id>/edit', views.edit_table, name='edit_table'),
     path('table/<int:table_id>/save', views.save_table, name='save_table'),
+    path('table/create', views.create_table, name='create_table')
 ]

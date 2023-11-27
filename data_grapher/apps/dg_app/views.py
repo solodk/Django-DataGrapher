@@ -73,3 +73,6 @@ def save_table(request, table_id):
             'redirect_url': reverse('dg_app:table', args=[table_id])
         })
     return JsonResponse({'status': 'error'})
+
+def create_table(request):
+    return render(request, 'dg_app/create_table.html')

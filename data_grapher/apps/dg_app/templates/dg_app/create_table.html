@@ -1,0 +1,39 @@
+{% extends 'dg_app/base.html' %}
+
+{% block header %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'dg_app/css/table.css' %}">
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="{% static 'dg_app/js/edit_table.js' %}"></script>
+{% endblock %}
+
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <table >
+            <thead>
+                <tr>
+                    {% for column in content.columns %}
+                        <th contenteditable="true">
+                            {{ column }}
+                        </th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for result in content.results %}
+                    <tr>
+                        {% for value in result %}
+                            <td contenteditable="true">
+                                {{ value }}
+                            </td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+            
+        </table>
+        <button onclick="saveChanges()" data-url="{% url 'dg_app:save_table' table_id=1 %}">Save Changes</button>
+    {% endif %}
+{% endblock content %}
