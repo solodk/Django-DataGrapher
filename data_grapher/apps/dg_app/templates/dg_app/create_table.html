@@ -11,29 +11,27 @@
 
 {% block content %}
     {% if user.is_authenticated %}
-        <table >
-            <thead>
-                <tr>
-                    {% for column in content.columns %}
-                        <th contenteditable="true">
-                            {{ column }}
-                        </th>
-                    {% endfor %}
-                </tr>
-            </thead>
-            <tbody>
-                {% for result in content.results %}
-                    <tr>
-                        {% for value in result %}
-                            <td contenteditable="true">
-                                {{ value }}
-                            </td>
-                        {% endfor %}
-                    </tr>
-                {% endfor %}
-            </tbody>
-            
-        </table>
-        <button onclick="saveChanges()" data-url="{% url 'dg_app:save_table' table_id=1 %}">Save Changes</button>
+    <button onclick="addRow()">Add Row</button>
+    <button onclick="addColumn()">Add Column</button>
+    <button onclick="deleteRow()">Delete Row</button>
+    <button onclick="deleteColumn()">Delete Column</button>
+    <table>
+        <thead>
+            <tr>
+                <th contenteditable="true">Column 1</th>
+                <th contenteditable="true">Column 2</th>
+                <th contenteditable="true">Column 3</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+            </tr>
+            <!-- Add more rows as needed -->
+        </tbody>
+    </table>
+        <button onclick="saveChanges()" data-url="{% url 'dg_app:save_table' table_id %}">Save Changes</button>
     {% endif %}
 {% endblock content %}
