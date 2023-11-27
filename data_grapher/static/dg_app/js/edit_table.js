@@ -1,3 +1,29 @@
+function addRow() {
+    var newRow = $('<tr>');
+    $('thead th').each(function() {
+        newRow.append('<td contenteditable="true"></td>');
+    });
+    $('tbody').append(newRow);
+}
+
+function addColumn() {
+    $('thead tr').append('<th contenteditable="true"></th>');
+    $('tbody tr').each(function() {
+        $(this).append('<td contenteditable="true"></td>');
+    });
+}
+
+function deleteRow() {
+    $('tbody tr:last').remove();
+}
+
+function deleteColumn() {
+    $('thead th:last').remove();
+    $('tbody tr').each(function() {
+        $(this).find('td:last').remove();
+    });
+}
+
 function getColumns() {
     var headers = document.querySelectorAll('thead th[contenteditable="true"]');
     return Array.from(headers).map(function (header) {
