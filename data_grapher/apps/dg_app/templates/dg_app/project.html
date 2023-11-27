@@ -9,7 +9,7 @@
         <ul>
         {% for table in tables %}
             <li>
-                <a href="{% url 'dg_app:table' table.id project_id %}">{{ table.name }}</a>
+                <a href="{% url 'dg_app:table' table_id=table.id project_id=project_id %}">{{ table.name }}</a>
             </li>
         {% empty %}
             <li>

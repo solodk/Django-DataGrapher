@@ -65,7 +65,7 @@ def edit_table(request, table_id, project_id):
 
         return JsonResponse({
             'status': 'success', 
-            'redirect_url': reverse('dg_app:table', args=[table.id, project_id])
+            'redirect_url': reverse('dg_app:table', kwargs={'table_id': table.id, 'project_id': project_id})
         })
 
     context = {
