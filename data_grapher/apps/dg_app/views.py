@@ -59,7 +59,8 @@ def edit_table(request, table_id, project_id):
         data = json.loads(request.body.decode('utf-8'))
 
         # Update the existing table content
-        table.content = data
+        table.content = data['content']
+        table.name = data['name']
         table.save()
 
         return JsonResponse({
@@ -67,17 +68,28 @@ def edit_table(request, table_id, project_id):
             'redirect_url': reverse('dg_app:table', args=[table.id, project_id])
         })
 
-    context = {'content': table.content, 'table_id': table_id, 'project_id': project_id}
+    context = {
+        'content': table.content,
+        'name': table.name, 
+        'table_id': table_id, 
+        'project_id': project_id
+        }
     return render(request, 'dg_app/edit_table.html', context)
 
 @csrf_protect
 @login_required
 def create_table(request, project_id):
+    project = get_object_or_404(Project, id=project_id)
+
     if request.method == 'POST':
         data = json.loads(request.body.decode('utf-8'))
 
         # Create a new table instance
-        table = Table.objects.create(project=your_project_instance, content=data)
+        table = Table.objects.create(
+            project=project, 
+            content=data['content'],
+            name=data['name'],
+        )
 
         return JsonResponse({
             'status': 'success', 

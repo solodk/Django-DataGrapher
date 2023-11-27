@@ -49,11 +49,18 @@ function getResults() {
     return results;
 }
 
+function getName() {
+    return $('#tableName').val();
+}
+
 function saveChanges() {
     var url = $('button[data-url]').data('url');
     var data = {
-        "columns": getColumns(),
-        "results": getResults()
+        "content": {
+            "columns": getColumns(),
+            "results": getResults(),
+        },
+        "name": getName()
     };
     
     var csrfToken = $('[name=csrfmiddlewaretoken]').val();
