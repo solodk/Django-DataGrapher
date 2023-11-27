@@ -11,6 +11,10 @@
 
 {% block content %}
     {% if user.is_authenticated %}
+    <button onclick="addRow()">Add Row</button>
+    <button onclick="addColumn()">Add Column</button>
+    <button onclick="deleteRow()">Delete Row</button>
+    <button onclick="deleteColumn()">Delete Column</button>
         <table >
             <thead>
                 <tr>
