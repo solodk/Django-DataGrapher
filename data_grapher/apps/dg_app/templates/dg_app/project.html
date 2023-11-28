@@ -3,12 +3,13 @@
 {% block content %}
 
     {% if user.is_authenticated %}
+    <p><a href="{% url 'dg_app:create_table' project_id %}">Create table</a></p>
     <ul>
         <li>{{ project.name }}</li>
         <ul>
         {% for table in tables %}
             <li>
-                <a href="{% url 'dg_app:table' table.id %}">{{ table.name }}</a>
+                <a href="{% url 'dg_app:table' table_id=table.id project_id=project_id %}">{{ table.name }}</a>
             </li>
         {% empty %}
             <li>

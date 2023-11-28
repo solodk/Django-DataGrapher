@@ -1,0 +1,38 @@
+{% extends 'dg_app/base.html' %}
+
+{% block header %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'dg_app/css/table.css' %}">
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="{% static 'dg_app/js/edit_table.js' %}"></script>
+{% endblock %}
+
+
+{% block content %}
+    {% if user.is_authenticated %}
+    <input type="text" id="tableName" value="{{ name }}" required>
+
+    <button onclick="addRow()">Add Row</button>
+    <button onclick="addColumn()">Add Column</button>
+    <button onclick="deleteRow()">Delete Row</button>
+    <button onclick="deleteColumn()">Delete Column</button>
+    <table>
+        <thead>
+            <tr>
+                <th contenteditable="true">Column 1</th>
+                <th contenteditable="true">Column 2</th>
+                <th contenteditable="true">Column 3</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+            </tr>
+        </tbody>
+    </table>
+        <button onclick="saveChanges()" data-url="{% url 'dg_app:create_table' project_id=project_id %}">Save Changes</button>
+    {% endif %}
+{% endblock content %}

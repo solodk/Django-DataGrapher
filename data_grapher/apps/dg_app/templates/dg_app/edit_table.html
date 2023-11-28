@@ -11,6 +11,8 @@
 
 {% block content %}
     {% if user.is_authenticated %}
+    <input type="text" id="tableName" value="{{ name }}" required>
+
     <button onclick="addRow()">Add Row</button>
     <button onclick="addColumn()">Add Column</button>
     <button onclick="deleteRow()">Delete Row</button>
@@ -38,6 +40,6 @@
             </tbody>
             
         </table>
-        <button onclick="saveChanges()" data-url="{% url 'dg_app:save_table' table_id %}">Save Changes</button>
+        <button onclick="saveChanges()" data-url="{% url 'dg_app:edit_table' table_id=table_id project_id=project_id %}">Save Changes</button>
     {% endif %}
 {% endblock content %}

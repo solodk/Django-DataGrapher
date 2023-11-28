@@ -7,7 +7,7 @@
         <ul>
         {% for project in projects %}
             <li>
-                <a href="{% url 'dg_app:project' project.id %}">
+                <a href="{% url 'dg_app:project' project_id=project.id %}">
                     {{ project.name }}</a></li>
         {% empty %}
             <li>No project have been created yet.</li>
