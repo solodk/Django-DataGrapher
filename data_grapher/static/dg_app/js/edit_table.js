@@ -55,6 +55,13 @@ function getName() {
 
 function saveChanges() {
     var url = $('button[data-url]').data('url');
+
+    var tableName = getName();
+    if (tableName.trim() === "") {
+        alert("Table name cannot be empty!");
+        return;
+    }
+
     var data = {
         "content": {
             "columns": getColumns(),
