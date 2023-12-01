@@ -1,0 +1,9 @@
+{% extends 'dg_app/base.html' %}
+
+{% block content %}
+    <form action="{% url 'dg_app:create_graph' %}?table_id={{table_id}}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+{% endblock content %}

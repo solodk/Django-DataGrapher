@@ -8,6 +8,7 @@
 {% block content %}
     {% if user.is_authenticated %}
     <p><a href="{% url 'dg_app:edit_table' table_id=table_id project_id=project_id %}">Edit</a></p>
+    <p><a href="{% url 'dg_app:create_graph' %}?table_id={{table_id}}">Graph</a></p>
 
         <table>
             <thead>

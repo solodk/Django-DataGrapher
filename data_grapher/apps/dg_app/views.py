@@ -8,7 +8,9 @@ from django.views.decorators.csrf import csrf_exempt, csrf_protect
 
 import json
 
-from .models import Project, Table
+from .forms import GraphForm
+from .models import Project, Table, Graph
+from .utils import generate_plot
 
 # Create your views here.
 
@@ -93,8 +95,42 @@ def create_table(request, project_id):
 
         return JsonResponse({
             'status': 'success', 
-            'redirect_url': reverse('dg_app:table', kwargs={'table_id': table.id, 'project_id': project_id})
+            'redirect_url': reverse(
+                'dg_app:table', 
+                kwargs={
+                    'table_id': table.id, 
+                    'project_id': project_id
+                }
+            )
         })
 
     context = {'project_id': project_id}
     return render(request, 'dg_app/create_table.html', context)
+
+def create_graph(request):
+    table_id = request.GET.get('table_id')
+    if request.method == 'POST':
+        form = GraphForm(request.POST, table_id=table_id)
+        if form.is_valid():
+            graph_instance = form.save(commit=False)
+            graph_instance.table_id = table_id
+            graph_instance.save()
+
+            return redirect('dg_app:graph', graph_id=graph_instance.id)
+    else:
+        form = GraphForm(table_id=table_id)
+
+    context = {'form': form, 'table_id': table_id}
+    return render(request, 'dg_app/create_graph.html', context)
+
+def graph(request, graph_id):
+    graph = get_object_or_404(Graph, id=graph_id)
+
+    graph_image = generate_plot(
+        graph.table.id,
+        graph.x_axis, 
+        graph.y_axis, 
+        graph.graph_type
+        )
+    context = {'graph_image': graph_image}
+    return render(request, 'dg_app/graph.html', context)
