@@ -1,0 +1,7 @@
+{% extends 'dg_app/base.html' %}
+
+{% block content %}
+    {% if graph_image %}
+        <img src="{{ graph_image }}" alt="Generated Graph">
+    {% endif %}
+{% endblock content %}
