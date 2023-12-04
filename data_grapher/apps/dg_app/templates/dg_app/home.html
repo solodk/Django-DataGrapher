@@ -5,7 +5,7 @@
         <a href="{% url 'dg_app:projects' %}">Projects</a> - 
         <a>Graphs</a>
         {% for graph in graphs %}
-            <li><a href="somegraph.url">{{ graph.name }}</a></li>
+            <li><a href="{% url 'dg_app:graph' graph_id=graph.id%}">{{ graph.name }}</a></li>
         {% empty %}
             <p>No graphs have been created yet.</p>
         {% endfor %}
