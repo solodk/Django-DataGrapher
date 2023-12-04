@@ -23,3 +23,8 @@ class GraphForm(forms.ModelForm):
     class Meta:
         model = Graph
         fields = ['name', 'graph_type', 'y_axis', 'x_axis']
+
+class ProjectForm(forms.ModelForm):
+    class Meta:
+        model = Project
+        fields = ['name']
