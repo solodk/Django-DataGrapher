@@ -8,7 +8,7 @@ from django.views.decorators.csrf import csrf_exempt, csrf_protect
 
 import json
 
-from .forms import GraphForm
+from .forms import GraphForm, ProjectForm
 from .models import Project, Table, Graph
 from .utils import generate_plot
 
@@ -139,3 +139,18 @@ def graph(request, graph_id):
         )
     context = {'graph_image': graph_image}
     return render(request, 'dg_app/graph.html', context)
+
+def create_project(request):
+    if request.method == 'POST':
+        form = ProjectForm(request.POST)
+        if form.is_valid():
+            project_instance = form.save(commit=False)
+            project_instance.owner = request.user
+            project_instance.save()
+        
+        return redirect('dg_app:projects')
+    else:
+        form = ProjectForm()
+    
+    context = {'form': form}
+    return render(request, 'dg_app/create_project.html', context)
