@@ -19,7 +19,10 @@ def index(request):
 
 @login_required()
 def home(request):
-    return render(request, 'dg_app/home.html')
+    graphs = Graph.objects.filter(owner=request.user).order_by('date_created')
+    
+    context = {'graphs': graphs}
+    return render(request, 'dg_app/home.html', context)
 
 @login_required
 def projects(request):
@@ -88,6 +91,7 @@ def create_table(request, project_id):
 
         # Create a new table instance
         table = Table.objects.create(
+            owner=request.user, #wrong
             project=project, 
             content=data['content'],
             name=data['name'],
@@ -114,6 +118,7 @@ def create_graph(request):
         if form.is_valid():
             graph_instance = form.save(commit=False)
             graph_instance.table_id = table_id
+            graph_instance.owner = request.user
             graph_instance.save()
 
             return redirect('dg_app:graph', graph_id=graph_instance.id)

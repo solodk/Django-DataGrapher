@@ -11,6 +11,7 @@ class Project(models.Model):
 
 class Table(models.Model):
     name = models.CharField(max_length=128)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     date_created = models.DateTimeField(auto_now_add=True)
     content = models.JSONField()
@@ -39,6 +40,7 @@ class Graph(models.Model):
     ]
 
     name = models.CharField(max_length=128)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
     graph_type = models.CharField(max_length=20, choices=GRAPH_TYPES)
     table = models.ForeignKey(Table, on_delete=models.CASCADE)
     date_created = models.DateTimeField(auto_now_add=True)

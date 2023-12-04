@@ -3,8 +3,12 @@
 {% block content %}
     {% if user.is_authenticated %}
         <a href="{% url 'dg_app:projects' %}">Projects</a> - 
-        <a>Templates</a>
-        <p>{Latest Templates}</p>
+        <a>Graphs</a>
+        {% for graph in graphs %}
+            <li><a href="somegraph.url">{{ graph.name }}</a></li>
+        {% empty %}
+            <p>No graphs have been created yet.</p>
+        {% endfor %}
     {% else %}
         <p>You need to be logged in to see this page</p>
     {% endif %}
